@@ -48,7 +48,7 @@ class BoxInputField extends StatelessWidget {
       children: [
         BoxText.bodyMed(
           label,
-          color: isError ? Colors.red : null,
+          color: isError ? Colors.red : context.theme.colorScheme.onSecondary,
         ),
         WidgetSizes.spacingXSs.boxH,
         ValueListenableBuilder(
@@ -61,7 +61,7 @@ class BoxInputField extends StatelessWidget {
                 controller: controller,
                 style: context.textTheme.bodyMedium?.copyWith(
                   fontWeight: FontWeight.w500,
-                  color: kcSecondaryColor,
+                  color: context.theme.colorScheme.onSecondary,
                 ),
                 obscureText: password && (!show),
                 cursorColor: kcSecondaryColor,
@@ -69,7 +69,8 @@ class BoxInputField extends StatelessWidget {
                 decoration: InputDecoration(
                   hintText: placeholder,
                   hintStyle: context.textTheme.bodyLarge?.copyWith(
-                    color: kcSecondaryColor.withOpacity(.5),
+                    color:
+                        context.theme.colorScheme.onSecondary.withOpacity(.5),
                     fontWeight: FontWeight.w500,
                   ),
                   contentPadding: const PagePadding.generalCardAll(),
@@ -82,7 +83,7 @@ class BoxInputField extends StatelessWidget {
                           child: trailing ??
                               Icon(
                                 show ? Icons.visibility_off : Icons.visibility,
-                                color: context.theme.colorScheme.secondary,
+                                color: context.theme.colorScheme.onSecondary,
                               ),
                         )
                       : null,

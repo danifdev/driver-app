@@ -13,7 +13,7 @@ class DetailMoney extends StatelessWidget {
       text: TextSpan(
         text: money.toString(),
         style: context.textTheme.bodyLarge?.copyWith(
-          color: kcSecondaryColor,
+          color: context.theme.colorScheme.onSecondary,
           fontSize: 42,
           fontWeight: FontWeight.bold,
         ),
@@ -22,7 +22,7 @@ class DetailMoney extends StatelessWidget {
             text: ' TMT',
             style: context.textTheme.bodyMedium?.copyWith(
               fontSize: 16,
-              color: kcSecondaryColor,
+              color: context.theme.colorScheme.onSecondary,
               fontWeight: FontWeight.bold,
             ),
           ),

@@ -10,12 +10,12 @@ class AppBloc extends Cubit<AppState> {
 
   void checkAndChangeTheme() {
     final hour = DateTime.now().hour;
-    if (hour < 7 && hour > 4) {
-      emit(state.copyWith(themeMode: AppThemeMode.dark));
-      changeSystemTheme(isDark: true);
-    } else {
+    if (hour > 7 && hour < 21) {
       emit(state.copyWith(themeMode: AppThemeMode.light));
       changeSystemTheme();
+    } else {
+      emit(state.copyWith(themeMode: AppThemeMode.dark));
+      changeSystemTheme(isDark: true);
     }
   }
 }
@@ -37,7 +37,7 @@ class AppState {
 void changeSystemTheme({bool isDark = false}) {
   Color navColor;
 
-  navColor =  kcWhite;
+  navColor = kcWhite;
 
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(

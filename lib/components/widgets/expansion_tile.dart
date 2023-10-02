@@ -44,7 +44,7 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
           widget.title ?? '',
           style: context.textTheme.bodyLarge?.copyWith(
             fontWeight: FontWeight.w500,
-            color: kcSecondaryColor,
+            color: context.theme.colorScheme.onSecondary,
             fontSize: 18,
           ),
         ),
@@ -52,7 +52,7 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
           widget.subtitle ?? '',
           style: context.textTheme.bodyLarge?.copyWith(
             fontWeight: FontWeight.w500,
-            color: kcSecondaryColor,
+            color: context.theme.colorScheme.onSecondary,
             fontSize: 18,
           ),
         ),

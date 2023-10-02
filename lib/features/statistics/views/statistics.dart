@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:ms_taxi/components/widgets/base_app_bar.dart';
 import 'package:ms_taxi/components/widgets/expansion_tile.dart';
 import 'package:ms_taxi/utils/constants/colors.dart';
@@ -40,7 +39,6 @@ class StatisticsView extends StatelessWidget {
     return Scaffold(
       appBar: const BaseAppBar(
         title: 'Cтатистика',
-        color: kcSecondaryColor,
       ).toPreferredSize,
       body: SingleChildScrollView(
         child: Column(

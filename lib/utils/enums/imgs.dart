@@ -3,10 +3,14 @@ import 'package:flutter_svg/svg.dart';
 
 enum ImgConstants {
   dateLogo('date_logo'),
+  dateDark('date_light'),
   msLogo('ms_logo'),
+  msDark('ms_light'),
   smallCarLogo('small_car_logo'),
+  smallCarDark('small_car_light'),
   taxi('taxi'),
   titleLogo('title_logo'),
+  titleDark('title_light'),
   carLogo('car_logo'),
   layout('back');
 

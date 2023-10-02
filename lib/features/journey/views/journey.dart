@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:ms_taxi/app/app_router.dart';
 import 'package:ms_taxi/components/widgets/base_app_bar.dart';
 import 'package:ms_taxi/components/widgets/button.dart';
@@ -8,17 +11,62 @@ import 'package:ms_taxi/features/journey/views/journey_detail.dart';
 import 'package:ms_taxi/features/journey/widgets/counter_money.dart';
 import 'package:ms_taxi/features/journey/widgets/row_tile.dart';
 import 'package:ms_taxi/features/journey/widgets/tarif_btn.dart';
+import 'package:ms_taxi/services/location_service.dart';
 import 'package:ms_taxi/utils/constants/colors.dart';
 import 'package:ms_taxi/utils/extensions.dart';
 import 'package:ms_taxi/utils/paddings/paddings.dart';
 import 'package:ms_taxi/utils/size/index.dart';
 
-class JourneyView extends StatelessWidget {
-  JourneyView({this.type = RequestType.day, super.key});
+class JourneyView extends StatefulWidget {
+  const JourneyView({this.type = RequestType.day, super.key});
 
   static const route = '/journey';
 
   final RequestType type;
+
+  @override
+  State<JourneyView> createState() => _JourneyViewState();
+}
+
+class _JourneyViewState extends State<JourneyView> {
+  late LocationService _locationService;
+
+  late StreamSubscription<int> _timerSubscription;
+  final StreamController<String> _duration =
+      StreamController<String>.broadcast();
+
+  void startTimer() {
+    var counter = 0;
+    _timerSubscription =
+        Stream<int>.periodic(const Duration(seconds: 1), (x) => counter++)
+            .listen((counter) {
+      final hoursStr =
+          ((counter / (60 * 60)) % 60).floor().toString().padLeft(2, '0');
+      final minutesStr =
+          ((counter / 60) % 60).floor().toString().padLeft(2, '0');
+      final secondsStr = (counter % 60).toString().padLeft(2, '0');
+      _duration.add('$hoursStr:$minutesStr:$secondsStr');
+    });
+  }
+
+  void stopTimer() {
+    _timerSubscription.cancel();
+  }
+
+  @override
+  void initState() {
+    startTimer();
+    _locationService = LocationService();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    stopTimer();
+    _locationService.dispose();
+    // _locationService.
+    super.dispose();
+  }
 
   final ValueNotifier<Tariffs> _selectedTariff =
       ValueNotifier<Tariffs>(Tariffs.products);
@@ -27,9 +75,6 @@ class JourneyView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        height: context.mediaQuery.size.height -
-            kToolbarHeight -
-            kBottomNavigationBarHeight,
         margin: const PagePadding.onlyTopLowNormal(),
         padding: const PagePadding.horizontalNormalSymmetric(),
         child: SingleChildScrollView(
@@ -39,8 +84,14 @@ class JourneyView extends StatelessWidget {
               WidgetSizes.spacingXl.boxH,
               _tariffs(),
               WidgetSizes.spacingM.boxH,
-              const CounterMoney(
-                money: 15.256,
+              StreamBuilder<double>(
+                stream: _locationService.moneyStream,
+                builder: (context, snapshot) {
+                  final money = snapshot.data ?? 0.0;
+                  return CounterMoney(
+                    money: money,
+                  );
+                },
               ),
               WidgetSizes.spacingM.boxH,
               _mainFunctions(),
@@ -74,6 +125,7 @@ class JourneyView extends StatelessWidget {
                   },
                 ),
               ),
+              WidgetSizes.spacingXl.boxH,
             ],
           ),
         ),
@@ -90,7 +142,7 @@ class JourneyView extends StatelessWidget {
           backgroundColor: kcWhite,
           content: Container(
             decoration: BoxDecoration(
-              color: kcWhite,
+              color: context.theme.colorScheme.error,
               borderRadius: BorderRadius.circular(12),
             ),
             padding: const EdgeInsets.symmetric(
@@ -105,7 +157,7 @@ class JourneyView extends StatelessWidget {
                   'ЗАВЕРШИТ ПОЕЗДКУ?',
                   style: context.textTheme.labelLarge?.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: kcSecondaryColor,
+                    color: context.theme.colorScheme.onSecondary,
                     fontSize: 20,
                   ),
                 ),
@@ -139,7 +191,7 @@ class JourneyView extends StatelessWidget {
   Row _status() {
     return Row(
       children: [
-        Expanded(child: RowTile(title: 'Тариф:', value: type.title)),
+        Expanded(child: RowTile(title: 'Тариф:', value: widget.type.title)),
         BoxButton(
           text: 'Ожидания',
           padding: const PagePadding.allVeryLow(),
@@ -155,18 +207,32 @@ class JourneyView extends StatelessWidget {
     );
   }
 
-  Row _mainFunctions() {
-    return const Row(
+  Widget _mainFunctions() {
+    return Row(
       children: [
         Expanded(
-          child: RowTile(title: 'Время:', value: '00:05:29'),
-        ),
-        Expanded(
-          child: RowTile(
-            title: 'Путь:',
-            value: '5,32 км',
-            needExpand: true,
+          child: StreamBuilder<String>(
+            stream: _duration.stream,
+            builder: (context, snapshot) {
+              final t = snapshot.data;
+              'Timer --> $t'.log();
+              return RowTile(title: 'Время:', value: t ?? '00:00:00');
+            },
           ),
+        ),
+        StreamBuilder<double>(
+          stream: _locationService.distanceStream,
+          builder: (context, snapshot) {
+            final data = snapshot.data?.toStringAsFixed(1);
+            'Distance --> ${snapshot.data}'.log();
+            return Expanded(
+              child: RowTile(
+                title: 'Путь:',
+                value: '${data ?? 0.0} км',
+                needExpand: true,
+              ),
+            );
+          },
         ),
       ],
     );

@@ -20,7 +20,6 @@ class App extends StatelessWidget {
       ],
       child: BlocBuilder<AppBloc, AppState>(
         builder: (context, state) {
-          log('Theme --> ${state.themeMode}');
           return MaterialApp.router(
             title: 'Ms Taxi',
             routerConfig: AppRouter.instance,

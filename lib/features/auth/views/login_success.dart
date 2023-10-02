@@ -28,12 +28,12 @@ class _LoginSuccessState extends State<LoginSuccess> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 179, 162, 124),
+      backgroundColor: context.theme.colorScheme.onBackground,
       body: AlertDialog(
         contentPadding: EdgeInsets.zero,
         content: Container(
           decoration: BoxDecoration(
-            color: kcWhite,
+            color: context.theme.colorScheme.secondary,
             borderRadius: BorderRadius.circular(16),
           ),
           padding: const PagePadding.generalAllNormal(),
@@ -51,11 +51,14 @@ class _LoginSuccessState extends State<LoginSuccess> {
                   fontSize: 75,
                   fontWeight: FontWeight.bold,
                   fontFamily: Icons.check.fontFamily,
-                  color: kcSecondaryColor,
+                  color: context.theme.colorScheme.onSecondary,
                 ),
               ),
               WidgetSizes.spacingL.boxH,
-              const BoxText.bigTitle('Аккаунт создан'),
+              BoxText.bigTitle(
+                'Аккаунт создан',
+                color: context.theme.colorScheme.onSecondary,
+              ),
               WidgetSizes.spacingL.boxH,
               WidgetSizes.spacingL.boxH,
               WidgetSizes.spacingL.boxH,

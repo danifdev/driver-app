@@ -35,7 +35,9 @@ class TariffBtn extends StatelessWidget {
         style: context.textTheme.bodyMedium?.copyWith(
           fontSize: 20,
           fontWeight: FontWeight.bold,
-          color: !isSelected ? kcSecondaryColor : kcButtonSuccessColor,
+          color: !isSelected
+              ? context.theme.colorScheme.onSecondary
+              : kcButtonSuccessColor,
         ),
       ),
     );

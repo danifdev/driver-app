@@ -99,6 +99,7 @@ class JourneyDetail extends StatelessWidget {
                   },
                 ),
               ).toCenter(),
+              WidgetSizes.spacingXl.boxH,
             ],
           ),
         ),
@@ -125,7 +126,7 @@ class JourneyDetail extends StatelessWidget {
                 BoxText.caption(
                   'Животные',
                   style: context.textTheme.bodySmall?.copyWith(
-                    color: kcSecondaryColor,
+                    color: context.theme.colorScheme.onSecondary,
                     fontWeight: FontWeight.w500,
                     fontSize: 16,
                   ),
@@ -145,7 +146,7 @@ class JourneyDetail extends StatelessWidget {
                   'Животные',
                   style: context.textTheme.bodySmall?.copyWith(
                     fontSize: 16,
-                    color: kcSecondaryColor,
+                    color: context.theme.colorScheme.onSecondary,
                     fontWeight: FontWeight.w500,
                   ),
                 ),

@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ms_taxi/app/app_router.dart';
 import 'package:ms_taxi/components/widgets/button.dart';
-// import 'package:flutter/widgets.dart';
-// import 'package:ms_taxi/app/app_router.dart';
 import 'package:ms_taxi/components/widgets/text.dart';
 import 'package:ms_taxi/features/home/views/home.dart';
 import 'package:ms_taxi/features/home/views/request/request.dart';
 import 'package:ms_taxi/utils/constants/colors.dart';
 import 'package:ms_taxi/utils/constants/routes.dart';
-// import 'package:ms_taxi/utils/constants/routes.dart';
 import 'package:ms_taxi/utils/extensions.dart';
-import 'package:ms_taxi/utils/paddings/paddings.dart';
 import 'package:ms_taxi/utils/size/index.dart';
 
 class RequestAccept extends StatelessWidget {
@@ -22,12 +18,12 @@ class RequestAccept extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 179, 162, 124),
+      backgroundColor: context.theme.colorScheme.onBackground,
       body: AlertDialog(
         contentPadding: EdgeInsets.zero,
         content: Container(
           decoration: BoxDecoration(
-            color: kcWhite,
+            color: context.theme.colorScheme.secondary,
             borderRadius: BorderRadius.circular(16),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 42, vertical: 14),
@@ -45,7 +41,9 @@ class RequestAccept extends StatelessWidget {
                   BoxButton(
                     text: 'Да',
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 26, vertical: 10),
+                      horizontal: 26,
+                      vertical: 10,
+                    ),
                     bgColor: kcButtonSuccessColor,
                     onTap: () {
                       if (requestType != null) {
@@ -59,7 +57,9 @@ class RequestAccept extends StatelessWidget {
                   // ignore: inference_failure_on_instance_creation
                   BoxButton(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 24, vertical: 10),
+                      horizontal: 24,
+                      vertical: 10,
+                    ),
                     bgColor: kcButtonErrorColor,
                     text: 'Нет',
                     onTap: () {
@@ -76,7 +76,7 @@ class RequestAccept extends StatelessWidget {
                 'Вы действительно хотите подтвердить?',
                 style: context.textTheme.labelLarge?.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: kcSecondaryColor,
+                  color: context.theme.colorScheme.onSecondary,
                   fontSize: 22,
                 ),
                 textAlign: TextAlign.center,
