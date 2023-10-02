@@ -4,10 +4,14 @@ import 'package:flutter/material.dart';
 
 const kcBlack = Colors.black;
 const kcWhite = Colors.white;
+
+const kcDialogBgView = Color.fromARGB(255, 179, 162, 124);
+const kcDialogBgViewDark = Color(0xff002583);
 const kcPrimaryColor = Color(0xffFFCF5A);
 const kcPrimarySecondary = Color(0xffEDA805);
 const kcSecondaryColor = Color(0xff19007D);
 const kcSecondaryBg = Color(0xff001A5C);
+const kcShapeColor = Color.fromARGB(255, 0, 21, 74);
 
 const kcPrimaryTextColor = Color.fromRGBO(0, 0, 0, 1);
 const kcSecondaryTextColor = Color.fromRGBO(255, 255, 255, 1);

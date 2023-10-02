@@ -35,18 +35,24 @@ class RequestView extends StatelessWidget {
                   Column(
                     children: [
                       BoxButton<RequestType>.outlined(
+                        textColor: type != RequestType.vip
+                            ? context.theme.colorScheme.primary
+                            : context.theme.colorScheme.onPrimary,
                         isExpanded: true,
                         data: RequestType.vip,
                         onChanged: (value) {
                           selectedType.value = value;
                         },
                         text: RequestType.vip.title,
-                        bgColor: context.theme.primaryColor,
+                        bgColor: context.theme.colorScheme.primary,
                         isSelected: type == RequestType.vip,
                       ),
                       WidgetSizes.spacingXl.boxH,
                       BoxButton<RequestType>.outlined(
-                        bgColor: context.theme.primaryColor,
+                        textColor: type != RequestType.sienna
+                            ? context.theme.colorScheme.primary
+                            : context.theme.colorScheme.onPrimary,
+                        bgColor: context.theme.colorScheme.primary,
                         data: RequestType.sienna,
                         onChanged: (value) {
                           selectedType.value = value;
@@ -57,7 +63,10 @@ class RequestView extends StatelessWidget {
                       ),
                       WidgetSizes.spacingXl.boxH,
                       BoxButton<RequestType>.outlined(
-                        bgColor: context.theme.primaryColor,
+                        textColor: type != RequestType.payload
+                            ? context.theme.colorScheme.primary
+                            : context.theme.colorScheme.onPrimary,
+                        bgColor: context.theme.colorScheme.primary,
                         isExpanded: true,
                         data: RequestType.payload,
                         onChanged: (value) {
@@ -68,7 +77,10 @@ class RequestView extends StatelessWidget {
                       ),
                       WidgetSizes.spacingXl.boxH,
                       BoxButton<RequestType>.outlined(
-                        bgColor: context.theme.primaryColor,
+                        textColor: type != RequestType.order
+                            ? context.theme.colorScheme.primary
+                            : context.theme.colorScheme.onPrimary,
+                        bgColor: context.theme.colorScheme.primary,
                         isExpanded: true,
                         data: RequestType.order,
                         onChanged: (value) {

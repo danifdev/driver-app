@@ -132,7 +132,7 @@ class BoxText extends StatelessWidget {
           style: style ??
               context.textTheme.headlineLarge?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: kcSecondaryColor,
+                color: color ?? kcSecondaryColor,
               ),
           maxLines: maxLine,
           overflow: maxLine != null ? TextOverflow.ellipsis : null,

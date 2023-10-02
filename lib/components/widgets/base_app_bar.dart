@@ -18,9 +18,10 @@ class BaseAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: context.theme.colorScheme.background,
       leading: canPop
           ? BackButton(
-              color: color ?? kcPrimaryColor,
+              color: context.theme.colorScheme.primary,
             )
           : null,
       centerTitle: canPop,
@@ -29,7 +30,7 @@ class BaseAppBar extends StatelessWidget {
         style: context.textTheme.bodyLarge?.copyWith(
           fontSize: 18,
           fontWeight: FontWeight.bold,
-          color: kcSecondaryColor,
+          color: context.theme.colorScheme.onSecondary,
         ),
       ),
     );

@@ -139,7 +139,7 @@ class BoxButton<T> extends StatelessWidget {
                       ? (bgColor?.withOpacity(.4) ??
                           kcButtonSuccessColor.withOpacity(.4))
                       : bgColor ?? kcButtonSuccessColor)
-                  : Colors.white,
+                  : context.theme.colorScheme.background,
             ),
             child: AnimatedCrossFade(
               firstChild: DecoratedBox(
@@ -167,14 +167,18 @@ class BoxButton<T> extends StatelessWidget {
                     : BoxText.btnTxt(
                         text,
                         style: context.textTheme.labelLarge?.copyWith(
-                          color: outlined && !isSelected
-                              ? (disabled
-                                  ? (bgColor?.withOpacity(.5) ??
-                                      kcButtonSuccessColor.withOpacity(.5))
-                                  : (bgColor ?? kcButtonSuccessColor))
-                              : disabled
-                                  ? kcWhite.withOpacity(.5)
-                                  : kcWhite,
+                          color: textColor != null
+                              ? disabled
+                                  ? textColor?.withOpacity(.5)
+                                  : textColor
+                              : outlined && !isSelected
+                                  ? (disabled
+                                      ? (bgColor?.withOpacity(.5) ??
+                                          kcButtonSuccessColor.withOpacity(.5))
+                                      : (bgColor ?? kcButtonSuccessColor))
+                                  : disabled
+                                      ? kcWhite.withOpacity(.5)
+                                      : kcWhite,
                         ),
                       ),
               ),

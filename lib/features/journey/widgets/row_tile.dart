@@ -28,7 +28,7 @@ class RowTile extends StatelessWidget {
         Text(
           title,
           style: context.textTheme.bodyMedium?.copyWith(
-            color: kcSecondaryColor,
+            color: context.theme.colorScheme.onSecondary,
             fontWeight: FontWeight.w500,
             fontSize: 18,
           ),
@@ -41,7 +41,7 @@ class RowTile extends StatelessWidget {
                 value,
                 textAlign: valueAlignRight ? TextAlign.right : TextAlign.left,
                 style: context.textTheme.bodyMedium?.copyWith(
-                  color: kcSecondaryColor,
+                  color: context.theme.colorScheme.onSecondary,
                   fontWeight: FontWeight.w500,
                   fontSize: 18,
                 ),
@@ -51,7 +51,7 @@ class RowTile extends StatelessWidget {
             Text(
               value,
               style: context.textTheme.bodyMedium?.copyWith(
-                color: kcSecondaryColor,
+                color: context.theme.colorScheme.onSecondary,
                 fontWeight: FontWeight.w500,
                 fontSize: 18,
               ),

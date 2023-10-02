@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ms_taxi/app/app_router.dart';
+import 'package:ms_taxi/app/bloc/app_bloc.dart';
 import 'package:ms_taxi/components/widgets/button.dart';
 import 'package:ms_taxi/components/widgets/text.dart';
 import 'package:ms_taxi/features/home/views/request/request.dart';
@@ -10,6 +12,7 @@ import 'package:ms_taxi/utils/enums/imgs.dart';
 import 'package:ms_taxi/utils/extensions.dart';
 import 'package:ms_taxi/utils/paddings/paddings.dart';
 import 'package:ms_taxi/utils/size/index.dart';
+import 'package:ms_taxi/utils/theme/theme.dart';
 
 enum RequestType {
   night('Ночной'),
@@ -43,17 +46,30 @@ class HomeView extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ImgConstants.smallCarLogo.pngPicture(),
-                    WidgetSizes.spacingS.boxW,
-                    Padding(
-                      padding: const PagePadding.onlyTop(),
-                      child: ImgConstants.msLogo.pngPicture(),
-                    ),
-                  ],
+                BlocBuilder<AppBloc, AppState>(
+                  builder: (context, state) {
+                    return Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (state.themeMode == AppThemeMode.light) ...[
+                          ImgConstants.smallCarLogo.pngPicture(),
+                          WidgetSizes.spacingS.boxW,
+                          Padding(
+                            padding: const PagePadding.onlyTop(),
+                            child: ImgConstants.msLogo.pngPicture(),
+                          ),
+                        ] else ...[
+                          ImgConstants.smallCarDark.pngPicture(),
+                          WidgetSizes.spacingS.boxW,
+                          Padding(
+                            padding: const PagePadding.onlyTop(),
+                            child: ImgConstants.msDark.pngPicture(),
+                          ),
+                        ],
+                      ],
+                    );
+                  },
                 ),
                 Column(
                   children: [
@@ -62,6 +78,7 @@ class HomeView extends StatelessWidget {
                       children: [
                         // ignore: inference_failure_on_instance_creation
                         BoxButton(
+                          textColor: context.theme.colorScheme.onPrimary,
                           bgColor: context.theme.primaryColor,
                           isExpanded: true,
                           text: 'Поехали',
@@ -75,6 +92,7 @@ class HomeView extends StatelessWidget {
                     ),
                     WidgetSizes.spacingXl.boxH,
                     BoxButton(
+                      textColor: context.theme.colorScheme.onPrimary,
                       bgColor: context.theme.primaryColor,
                       isExpanded: true,
                       text: 'Cтатистика',
@@ -84,6 +102,7 @@ class HomeView extends StatelessWidget {
                     ),
                     WidgetSizes.spacingXl.boxH,
                     BoxButton(
+                      textColor: context.theme.colorScheme.onPrimary,
                       bgColor: context.theme.primaryColor,
                       isExpanded: true,
                       text: 'Запрос',
@@ -115,7 +134,10 @@ class HomeView extends StatelessWidget {
           case RequestType.day:
             return Row(
               children: [
-                const Icon(Icons.wb_sunny),
+                const Icon(
+                  Icons.wb_sunny,
+                  color: kcPrimaryColor,
+                ),
                 BoxText.bodyMed(
                   RequestType.day.title,
                   color: context.theme.primaryColor,
@@ -125,7 +147,10 @@ class HomeView extends StatelessWidget {
           case RequestType.night:
             return Row(
               children: [
-                const Icon(Icons.dark_mode),
+                const Icon(
+                  Icons.dark_mode,
+                  color: kcPrimaryColor,
+                ),
                 BoxText.bodyMed(
                   RequestType.night.title,
                   color: context.theme.primaryColor,

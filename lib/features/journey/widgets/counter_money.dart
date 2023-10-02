@@ -19,7 +19,7 @@ class CounterMoney extends StatelessWidget {
         text: TextSpan(
           text: a.toString(),
           style: context.textTheme.bodyLarge?.copyWith(
-            color: kcSecondaryColor,
+            color: context.theme.colorScheme.onSecondary,
             fontSize: 72,
             fontWeight: FontWeight.bold,
           ),
@@ -28,14 +28,14 @@ class CounterMoney extends StatelessWidget {
               text: '.$b',
               style: context.textTheme.bodyMedium?.copyWith(
                 fontSize: 52,
-                color: kcSecondaryColor,
+                color: context.theme.colorScheme.onSecondary,
                 fontWeight: FontWeight.bold,
               ),
               children: [
                 TextSpan(
                   text: ' TMT',
                   style: context.textTheme.bodySmall?.copyWith(
-                    color: kcSecondaryColor,
+                    color: context.theme.colorScheme.onSecondary,
                     fontWeight: FontWeight.bold,
                     fontSize: 28,
                   ),
