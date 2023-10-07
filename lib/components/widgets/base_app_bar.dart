@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ms_taxi/components/widgets/text.dart';
-import 'package:ms_taxi/utils/constants/colors.dart';
 import 'package:ms_taxi/utils/extensions.dart';
 
 class BaseAppBar extends StatelessWidget {

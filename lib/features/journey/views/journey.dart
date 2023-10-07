@@ -31,40 +31,15 @@ class JourneyView extends StatefulWidget {
 class _JourneyViewState extends State<JourneyView> {
   late LocationService _locationService;
 
-  late StreamSubscription<int> _timerSubscription;
-  final StreamController<String> _duration =
-      StreamController<String>.broadcast();
-
-  void startTimer() {
-    var counter = 0;
-    _timerSubscription =
-        Stream<int>.periodic(const Duration(seconds: 1), (x) => counter++)
-            .listen((counter) {
-      final hoursStr =
-          ((counter / (60 * 60)) % 60).floor().toString().padLeft(2, '0');
-      final minutesStr =
-          ((counter / 60) % 60).floor().toString().padLeft(2, '0');
-      final secondsStr = (counter % 60).toString().padLeft(2, '0');
-      _duration.add('$hoursStr:$minutesStr:$secondsStr');
-    });
-  }
-
-  void stopTimer() {
-    _timerSubscription.cancel();
-  }
-
   @override
   void initState() {
-    startTimer();
     _locationService = LocationService();
     super.initState();
   }
 
   @override
   void dispose() {
-    stopTimer();
     _locationService.dispose();
-    // _locationService.
     super.dispose();
   }
 
@@ -192,9 +167,17 @@ class _JourneyViewState extends State<JourneyView> {
     return Row(
       children: [
         Expanded(child: RowTile(title: 'Тариф:', value: widget.type.title)),
-        BoxButton(
-          text: 'Ожидания',
-          padding: const PagePadding.allVeryLow(),
+        StreamBuilder<StatusDriver>(
+          stream: _locationService.statusDriver,
+          builder: (context, snapshot) {
+            'Status ---> ${snapshot.data?.title}'.log();
+            final status = snapshot.data ?? StatusDriver.waiting;
+            return BoxButton<String>(
+              text: status.title['title'] as String,
+              bgColor: status.title['color'] as Color,
+              padding: const PagePadding.allVeryLow(),
+            );
+          },
         ),
       ],
     );
@@ -212,23 +195,26 @@ class _JourneyViewState extends State<JourneyView> {
       children: [
         Expanded(
           child: StreamBuilder<String>(
-            stream: _duration.stream,
+            stream: _locationService.durationStream,
             builder: (context, snapshot) {
               final t = snapshot.data;
-              'Timer --> $t'.log();
-              return RowTile(title: 'Время:', value: t ?? '00:00:00');
+              return RowTile(
+                isFitted: true,
+                title: 'Время:',
+                value: t ?? '00:00:00',
+              );
             },
           ),
         ),
         StreamBuilder<double>(
           stream: _locationService.distanceStream,
           builder: (context, snapshot) {
-            final data = snapshot.data?.toStringAsFixed(1);
-            'Distance --> ${snapshot.data}'.log();
+            final data = snapshot.data?.toStringAsFixed(2);
+            'Location --> $data'.log();
             return Expanded(
               child: RowTile(
                 title: 'Путь:',
-                value: '${data ?? 0.0} км',
+                value: '${data ?? 0.00} км',
                 needExpand: true,
               ),
             );

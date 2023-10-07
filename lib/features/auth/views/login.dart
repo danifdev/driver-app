@@ -21,8 +21,6 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  final GlobalKey<FormState> _key = GlobalKey<FormState>();
-
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -36,132 +34,124 @@ class _LoginViewState extends State<LoginView> {
     return Scaffold(
       body: SingleChildScrollView(
         child: SizedBox(
-          // height: context.mediaQuery.size.height,
-          child: Form(
-            key: _key,
-            child: ValueListenableBuilder<bool>(
-              valueListenable: _validateNotifier,
-              builder: (context, isValid, __) {
-                return BlocBuilder<AppBloc, AppState>(
-                  builder: (context, state) {
-                    return Column(
-                      children: [
-                        (context.mediaQuery.size.height * .1).boxH,
-                        if (state.themeMode == AppThemeMode.light) ...[
-                          ImgConstants.titleLogo.pngPicture(),
-                          ImgConstants.dateLogo.pngPicture(),
-                        ] else ...[
-                          ImgConstants.titleDark.pngPicture(),
-                          ImgConstants.dateDark.pngPicture(),
-                        ],
-                        Row(
-                          children: [
-                            Expanded(child: ImgConstants.taxi.pngPicture()),
-                          ],
-                        ),
-                        Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            Positioned(
-                              top: -40,
-                              left: -30,
-                              child: CustomPaint(
-                                painter: RPSCustomPainter(
-                                  context.theme.colorScheme.onSurface,
-                                  width: context.mediaQuery.size.width + 50,
-                                  // bg:,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: context.mediaQuery.size.width * .15,
-                              ),
-                              width: double.infinity,
-                              child: Column(
-                                children: [
-                                  ValueListenableBuilder<bool>(
-                                    valueListenable: _nameValidateNotifier,
-                                    builder: (context, valid, __) {
-                                      return BoxInputField(
-                                        controller: nameController,
-                                        label: 'Имя пользователя:',
-                                        placeholder: 'Имя',
-                                        isError: !valid,
-                                      );
-                                    },
-                                  ),
-                                  WidgetSizes.spacingM.boxH,
-                                  ValueListenableBuilder(
-                                    valueListenable: _passwordValidateNotifier,
-                                    builder: (context, valid, __) {
-                                      return BoxInputField(
-                                        controller: passwordController,
-                                        label: 'Парол:',
-                                        password: true,
-                                        placeholder: 'Парол',
-                                        isError: !valid,
-                                      );
-                                    },
-                                  ),
-                                  WidgetSizes.spacingM.boxH,
-                                  WidgetSizes.spacingM.boxH,
-                                  WidgetSizes.spacingM.boxH,
-                                  SizedBox(
-                                    width: double.infinity,
-                                    child: BoxButton(
-                                      bgColor: kcButtonSuccessColor,
-                                      disabled: !isValid,
-                                      text: 'Подтверждение',
-                                      onTap: () {
-                                        if (nameController.text
-                                            .trim()
-                                            .isEmpty) {
-                                          _nameValidateNotifier.value = false;
-                                          _validateNotifier.value = false;
-                                        } else {
-                                          _nameValidateNotifier.value = true;
-                                        }
-                                        if (passwordController.text
-                                            .trim()
-                                            .isEmpty) {
-                                          _passwordValidateNotifier.value =
-                                              false;
-                                          _validateNotifier.value = false;
-                                        } else {
-                                          _passwordValidateNotifier.value =
-                                              true;
-                                        }
-
-                                        if (passwordController.text
-                                                .trim()
-                                                .isNotEmpty &&
-                                            nameController.text
-                                                .trim()
-                                                .isNotEmpty) {
-                                          _validateNotifier.value = true;
-                                        }
-
-                                        if (isValid) {
-                                          AppRouter.instance.goNamed(
-                                            GoRouteNames.loginSuccess,
-                                          );
-                                        }
-                                      },
-                                    ),
-                                  ),
-                                  WidgetSizes.spacingM.boxH,
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+          child: ValueListenableBuilder<bool>(
+            valueListenable: _validateNotifier,
+            builder: (context, isValid, __) {
+              return BlocBuilder<AppBloc, AppState>(
+                builder: (context, state) {
+                  return Column(
+                    children: [
+                      (context.mediaQuery.size.height * .1).boxH,
+                      if (state.themeMode == AppThemeMode.light) ...[
+                        ImgConstants.titleLogo.pngPicture(),
+                        ImgConstants.dateLogo.pngPicture(),
+                      ] else ...[
+                        ImgConstants.titleDark.pngPicture(),
+                        ImgConstants.dateDark.pngPicture(),
                       ],
-                    );
-                  },
-                );
-              },
-            ),
+                      Row(
+                        children: [
+                          Expanded(child: ImgConstants.taxi.pngPicture()),
+                        ],
+                      ),
+                      Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Positioned(
+                            top: -40,
+                            left: -30,
+                            child: CustomPaint(
+                              painter: RPSCustomPainter(
+                                context.theme.colorScheme.onSurface,
+                                width: context.mediaQuery.size.width + 50,
+                                // bg:,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: context.mediaQuery.size.width * .15,
+                            ),
+                            width: double.infinity,
+                            child: Column(
+                              children: [
+                                ValueListenableBuilder<bool>(
+                                  valueListenable: _nameValidateNotifier,
+                                  builder: (context, valid, __) {
+                                    return BoxInputField(
+                                      controller: nameController,
+                                      label: 'Имя пользователя:',
+                                      placeholder: 'Имя',
+                                      isError: !valid,
+                                    );
+                                  },
+                                ),
+                                WidgetSizes.spacingM.boxH,
+                                ValueListenableBuilder(
+                                  valueListenable: _passwordValidateNotifier,
+                                  builder: (context, valid, __) {
+                                    return BoxInputField(
+                                      controller: passwordController,
+                                      label: 'Парол:',
+                                      password: true,
+                                      placeholder: 'Парол',
+                                      isError: !valid,
+                                    );
+                                  },
+                                ),
+                                WidgetSizes.spacingM.boxH,
+                                WidgetSizes.spacingM.boxH,
+                                WidgetSizes.spacingM.boxH,
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: BoxButton(
+                                    bgColor: kcButtonSuccessColor,
+                                    disabled: !isValid,
+                                    text: 'Подтверждение',
+                                    onTap: () {
+                                      if (nameController.text.trim().isEmpty) {
+                                        _nameValidateNotifier.value = false;
+                                        _validateNotifier.value = false;
+                                      } else {
+                                        _nameValidateNotifier.value = true;
+                                      }
+                                      if (passwordController.text
+                                          .trim()
+                                          .isEmpty) {
+                                        _passwordValidateNotifier.value = false;
+                                        _validateNotifier.value = false;
+                                      } else {
+                                        _passwordValidateNotifier.value = true;
+                                      }
+
+                                      if (passwordController.text
+                                              .trim()
+                                              .isNotEmpty &&
+                                          nameController.text
+                                              .trim()
+                                              .isNotEmpty) {
+                                        _validateNotifier.value = true;
+                                      }
+
+                                      if (isValid) {
+                                        AppRouter.instance.goNamed(
+                                          GoRouteNames.loginSuccess,
+                                        );
+                                      }
+                                    },
+                                  ),
+                                ),
+                                WidgetSizes.spacingM.boxH,
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
           ),
         ),
       ),

@@ -33,10 +33,6 @@ class BoxInputField extends StatelessWidget {
   final String label;
   final void Function()? trailingTapped;
 
-  // final circularBorder = OutlineInputBorder(
-  //   borderRadius: BorderRadius.circular(8),
-  // );
-
   final bool isError;
 
   final ValueNotifier<bool> _showPassword = ValueNotifier<bool>(false);
