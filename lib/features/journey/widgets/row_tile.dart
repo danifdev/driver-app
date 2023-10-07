@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:ms_taxi/utils/constants/colors.dart';
 import 'package:ms_taxi/utils/extensions.dart';
 
 class RowTile extends StatelessWidget {
   const RowTile({
     required this.title,
     required this.value,
+    this.isFitted = false,
     super.key,
     this.needExpand = false,
     this.valueAlignRight = false,
@@ -17,6 +17,7 @@ class RowTile extends StatelessWidget {
   final bool needExpand;
   final bool valueAlignRight;
   final Widget? valueW;
+  final bool isFitted;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,7 @@ class RowTile extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                   fontSize: 18,
                 ),
-              ),
+              ).whenWrapFitted(mayWrap: isFitted),
             )
           else
             Text(

@@ -20,7 +20,8 @@ enum IconConstants {
         _svg,
         width: width,
         height: height,
-        color: color,
+        colorFilter:
+            color != null ? ColorFilter.mode(color, BlendMode.color) : null,
       );
   Widget get svgPictureActive => SvgPicture.asset(
         _svg,

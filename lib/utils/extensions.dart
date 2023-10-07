@@ -21,6 +21,19 @@ extension LocaleName on String {
   bool get isRu => this == 'ru';
 }
 
+extension WrapWidgetExt on Widget {
+  Widget whenWrapFitted({BoxFit? fit, bool mayWrap = true}) {
+    return mayWrap
+        ? FittedBox(
+            fit: fit ?? BoxFit.contain,
+            child: this,
+          )
+        : SizedBox(
+            child: this,
+          );
+  }
+}
+
 extension Spacings on num {
   SizedBox get boxH => SizedBox(height: toDouble());
   SizedBox get boxW => SizedBox(width: toDouble());
